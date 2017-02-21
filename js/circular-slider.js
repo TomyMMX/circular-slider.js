@@ -1,3 +1,5 @@
+var sliderCount = 0;
+
 var makeCircularSlider = function(args) {
     
     //we have to know which container to use to draw the slider
@@ -7,7 +9,7 @@ var makeCircularSlider = function(args) {
     //our container
     var container = document.getElementById(args.container);
     
-    var sliderCount = 0;
+    sliderCount++;
     
     var defaultOptions = {
         color: "#ff3366", //the celtra logo color is set if no color is defined ;)
@@ -58,7 +60,9 @@ var makeCircularSlider = function(args) {
             buttonCircle.setAttribute("id", "buttonCircle" + sliderCount);  
             sliderCircle.appendChild(slidingButton);
             slidingButton.appendChild(buttonCircle);
-            slidingButton.style.width = (7+args.radius) + "px";           
+            slidingButton.style.width = (5+args.radius) + "px";   
+
+            sliderCircle.style.zIndex = sliderCount;
         }
         
         //public stuff
