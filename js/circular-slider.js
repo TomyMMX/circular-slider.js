@@ -35,10 +35,39 @@ var makeCircularSlider = function(args) {
         var slidingButton;
         var buttonCircle;
         
-        (function() {
-            //constructor
+        //center position of slider on screen
+        var center;        
+        
+        //constructor
+        (function() {            
             initSliderVisuals();
             initSliderPosition();
+            
+            //calculate center position of this slider on screen
+            var boundingRect = sliderCircle.getBoundingClientRect();
+            center = {
+                x: boundingRect.left + boundingRect.width / 2,
+                y: boundingRect.top + boundingRect.height / 2
+            };
+            
+            //event listeners
+            //add mousemove listener when mousedown on buttonCirlce
+            buttonCircle.addEventListener("mousedown", function() {
+                document.addEventListener("mousemove", moveSlider);
+            });
+            
+            //remove mousemove listener
+            document.addEventListener("mouseup", function() {
+                document.removeEventListener("mousemove", moveSlider);
+            });
+            
+            //and the same for touch events
+            buttonCircle.addEventListener("touchstart", function() {
+                document.addEventListener("touchmove", moveSlider);
+            });                        
+            document.addEventListener("touchend", function() {
+                document.removeEventListener("touchmove", moveSlider);
+            });
         })();
         
         //private stuff
@@ -76,9 +105,24 @@ var makeCircularSlider = function(args) {
         }
         
         function calculateAngleFromValue(val) {
-            var angle = Math.round(val / (args.maxValue - args.minValue) * 360 - 90);
+            return Math.round(val / (args.maxValue - args.minValue) * 360 - 90);
+        }
+        
+        function calculateAngleFromMousePosition(x, y) {
+            //distances from the center
+            var distX = x - center.x;
+            var distY = y - center.y;
+
+            return Math.round(Math.atan2(distY, distX) * 180 / Math.PI);
+        };
+        
+        function moveSlider(event) {
+            event.preventDefault();
             
-            return angle;
+            currentAngle = calculateAngleFromMousePosition(event.pageX, event.pageY);            
+            slidingButton.style.transform = 'rotate('+ currentAngle +'deg)';
+               
+            return false;
         }
         
         //public stuff
