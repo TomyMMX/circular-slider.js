@@ -17,6 +17,7 @@ var makeCircularSlider = function(args) {
         minValue: 0,        
         step: 1,
         radius: 100,
+        startValue: 0
     };
     
     //TODO: will we have optional arguments??
@@ -26,6 +27,9 @@ var makeCircularSlider = function(args) {
     }        
     
     var CircularSlider = function(args) {
+        var currentAngle = -90;
+        
+        //parts of the slider
         var sliderCircle;  
         var sliderCenter;
         var slidingButton;
@@ -34,6 +38,7 @@ var makeCircularSlider = function(args) {
         (function() {
             //constructor
             initSliderVisuals();
+            initSliderPosition();
         })();
         
         //private stuff
@@ -63,6 +68,17 @@ var makeCircularSlider = function(args) {
             slidingButton.style.width = (5+args.radius) + "px";   
 
             sliderCircle.style.zIndex = sliderCount;
+        }
+        
+        function initSliderPosition() {
+            currentAngle = calculateAngleFromValue(args.startValue);
+            slidingButton.style.transform = 'rotate('+ currentAngle +'deg)';
+        }
+        
+        function calculateAngleFromValue(val) {
+            var angle = Math.round(val / (args.maxValue - args.minValue) * 360 - 90);
+            
+            return angle;
         }
         
         //public stuff

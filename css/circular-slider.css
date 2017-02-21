@@ -34,6 +34,8 @@
 	left: 50%;
 	height: 34px;	
 	z-index: 1;
+    /* So we rotate around the correct pivot point */
+    transform-origin: center left;
 }
 [id^="buttonCircle"] {
     border-radius: 50%;
