@@ -25,7 +25,9 @@ var makeCircularSlider = function(args) {
     
     var CircularSlider = function(args) {
         var sliderCircle;  
-        var sliderCenter;        
+        var sliderCenter;
+        var slidingButton;
+        var buttonCircle;
         
         (function() {
             //constructor
@@ -45,9 +47,18 @@ var makeCircularSlider = function(args) {
             //masking circle... so it covers the center and we only see the edge of the main circle
             sliderCenter = document.createElement('div');
             sliderCenter.setAttribute("id", "sliderCenter" + sliderCount);
-            container.appendChild(sliderCenter);            
-            sliderCenter.style.width = (2 * args.radius - 30) + "px";
-            sliderCenter.style.height = (2 * args.radius - 30) + "px";
+            sliderCircle.appendChild(sliderCenter);            
+            sliderCenter.style.width = (2 * args.radius - 34) + "px";
+            sliderCenter.style.height = (2 * args.radius - 34) + "px";
+            
+            //actual sliding button
+            slidingButton = document.createElement('div');
+            buttonCircle = document.createElement('div');
+            slidingButton.setAttribute("id", "slidingButton" + sliderCount);
+            buttonCircle.setAttribute("id", "buttonCircle" + sliderCount);  
+            sliderCircle.appendChild(slidingButton);
+            slidingButton.appendChild(buttonCircle);
+            slidingButton.style.width = (7+args.radius) + "px";           
         }
         
         //public stuff

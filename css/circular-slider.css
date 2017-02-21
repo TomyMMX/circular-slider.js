@@ -19,3 +19,20 @@
     z-index: 1;	
 	background: #e5e5e6;	
 }
+
+[id^="slidingButton"] {
+	margin-top: -17px;
+    position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 34px;	
+	z-index: 1;
+}
+[id^="buttonCircle"] {
+    border-radius: 50%;
+    margin: 0 0 0 auto;
+	width: 30px;
+	height: 30px;
+    background: #ebebec;
+	border: 1px solid #d0d0d0;
+}
