@@ -1,0 +1,21 @@
+[id^="sliderCircle"] {
+    border-radius: 50%;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+[id^="sliderCenter"] {
+    border-radius: 50%;
+    margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+    z-index: 1;	
+	background: #e5e5e6;	
+}
