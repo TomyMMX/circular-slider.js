@@ -174,10 +174,19 @@ var makeCircularSlider = function(args) {
             return angle360;
         };
         
-        function moveSlider(event, isClick) {
-            event.preventDefault();
-                                    
-            var calculatedAngle = calculateAngleFromMousePosition(event.pageX, event.pageY);   
+        function moveSlider(event, isClick) {            
+            var X = event.pageX;
+            var Y = event.pageY;
+                         
+            if(X === undefined){
+                X = event.touches[0].clientX;
+            }
+            
+            if(Y === undefined){
+                Y = event.touches[0].clientY;
+            }
+                         
+            var calculatedAngle = calculateAngleFromMousePosition(X, Y);   
             
             if(isClick){
                 setCurrentAngleAndCalculateValue(calculatedAngle);
