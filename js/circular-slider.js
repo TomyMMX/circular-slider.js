@@ -27,6 +27,7 @@ var makeCircularSlider = function(args) {
     
     var CircularSlider = function(args) {
         var currentAngle = -90;
+        var currentValue = 0;
         
         //parts of the slider
         var sliderCircle;  
@@ -99,13 +100,13 @@ var makeCircularSlider = function(args) {
         }
         
         function initSliderPosition() {
-            currentAngle = calculateAngleFromValue(args.startValue);
+            setCurrentAngleAndCalculateValue(calculateAngleFromValue(args.startValue));
             slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';
         }
         
         function calculateAngleFromValue(val) {
             //0 degrees is equal ot minValue and 360 is equal to maxValue
-            return Math.round(val / (args.maxValue - args.minValue) * 360);
+            return val / (args.maxValue - args.minValue) * 360;
         }
         
         function calculateAngleFromMousePosition(x, y) {
@@ -114,7 +115,7 @@ var makeCircularSlider = function(args) {
             var distY = y - center.y;
             
             var angle360 = 0;
-            var angle180_180 = Math.round(Math.atan2(distY, distX) * 180 / Math.PI);
+            var angle180_180 = Math.atan2(distY, distX) * 180 / Math.PI;
             //the upper formula gives us the angle in the format -180 to 180... we want that in the 0 to 360 range
             //so 0 degrees is equal to minValue and 360 is equal to maxValue
             if(angle180_180 >= -90 && angle180_180 <= 0){
@@ -135,16 +136,24 @@ var makeCircularSlider = function(args) {
             
             //prevent sliding over the min/max value
             if(currentAngle>270 && calculatedAngle < 90){
-                currentAngle = 360;                
+                setCurrentAngleAndCalculateValue(360);                
             }else if (currentAngle < 90 && calculatedAngle > 270){
-                currentAngle = 0;                
+                setCurrentAngleAndCalculateValue(0);                
             }else{                
-                currentAngle = calculatedAngle;
+                setCurrentAngleAndCalculateValue(calculatedAngle);
             }                        
                   
             slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';  
                
             return false;
+        }
+        
+        function setCurrentAngleAndCalculateValue(angle){
+            //calculate closest legal value for angle
+            var exactValue = (args.maxValue-args.minValue) * (angle/360) + args.minValue;            
+            currentValue = Math.round(exactValue/args.step) * args.step;
+            
+            currentAngle = Math.round(currentValue / (args.maxValue - args.minValue) * 360);            
         }
         
         //public stuff
