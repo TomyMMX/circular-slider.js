@@ -86,7 +86,7 @@ var makeCircularSlider = function(args) {
             container.appendChild(sliderCircle);            
             sliderCircle.style.width = 2 * args.radius + "px";
             sliderCircle.style.height = 2 * args.radius + "px";
-            sliderCircle.style.background = "#cfcfd0";
+            sliderCircle.style["background-color"] = args.color;
             
             //masking circle... so it covers the center and we only see the edge of the main circle
             sliderCenter = document.createElement('div');
@@ -156,9 +156,17 @@ var makeCircularSlider = function(args) {
                 } 
             }            
                   
-            slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';  
+            slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';            
                
             return false;
+        }
+        
+        function colorSlider(){  
+            if (currentAngle >= 0 && currentAngle <= 180) {
+                sliderCircle.style["background-image"] = "linear-gradient(" + (currentAngle + 90) + "deg, transparent 50%, #cfcfd0 50%), linear-gradient(90deg, #cfcfd0 50%, transparent 50%)";
+            } else {
+                sliderCircle.style["background-image"] = "linear-gradient(" + (currentAngle - 90) + "deg, transparent 50%, " + args.color + " 50%), linear-gradient(90deg, #cfcfd0 50%, transparent 50%)";
+            }
         }
         
         function setCurrentAngleAndCalculateValue(angle){
@@ -166,7 +174,8 @@ var makeCircularSlider = function(args) {
             var exactValue = (args.maxValue-args.minValue) * (angle/360) + args.minValue;            
             currentValue = Math.round(exactValue/args.step) * args.step;
             
-            currentAngle = Math.round(currentValue / (args.maxValue - args.minValue) * 360);            
+            currentAngle = Math.round(currentValue / (args.maxValue - args.minValue) * 360);   
+            colorSlider();
         }
         
         //public stuff
