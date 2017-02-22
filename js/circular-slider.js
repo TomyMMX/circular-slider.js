@@ -36,7 +36,7 @@ var makeCircularSlider = function(args) {
         var buttonCircle;
         
         //center position of slider on screen
-        var center;        
+        var center;   
         
         //constructor
         (function() {            
@@ -60,13 +60,21 @@ var makeCircularSlider = function(args) {
             document.addEventListener("mouseup", function() {
                 document.removeEventListener("mousemove", moveSlider);
             });
-            
+                     
             //and the same for touch events
             buttonCircle.addEventListener("touchstart", function() {
                 document.addEventListener("touchmove", moveSlider);
             });                        
             document.addEventListener("touchend", function() {
                 document.removeEventListener("touchmove", moveSlider);
+            });
+            
+            //click or touch event on the slider circle
+            sliderCircle.addEventListener("click", function(){
+                moveSlider(event, true);
+            });
+            sliderCircle.addEventListener("touchstart", function() {
+                moveSlider(event, true);
             });
         })();
         
@@ -129,19 +137,24 @@ var makeCircularSlider = function(args) {
             return angle360;
         };
         
-        function moveSlider(event) {
+        function moveSlider(event, isClick) {
             event.preventDefault();
                                     
             var calculatedAngle = calculateAngleFromMousePosition(event.pageX, event.pageY);   
             
-            //prevent sliding over the min/max value
-            if(currentAngle>270 && calculatedAngle < 90){
-                setCurrentAngleAndCalculateValue(360);                
-            }else if (currentAngle < 90 && calculatedAngle > 270){
-                setCurrentAngleAndCalculateValue(0);                
-            }else{                
+            if(isClick){
                 setCurrentAngleAndCalculateValue(calculatedAngle);
-            }                        
+            }
+            else{         
+                //prevent sliding over the min/max value
+                if(currentAngle>270 && calculatedAngle < 90){
+                    setCurrentAngleAndCalculateValue(360);                
+                }else if (currentAngle < 90 && calculatedAngle > 270){
+                    setCurrentAngleAndCalculateValue(0);                
+                }else{                
+                    setCurrentAngleAndCalculateValue(calculatedAngle);
+                } 
+            }            
                   
             slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';  
                
