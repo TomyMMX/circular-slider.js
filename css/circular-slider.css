@@ -28,11 +28,11 @@
 }
 
 [id^="slidingButton"] {
-	margin-top: -17px;
+	margin-top: -14px;
     position: absolute;
 	top: 50%;
 	left: 50%;
-	height: 34px;	
+	height: 28px;	
 	z-index: 1;
     /* So we rotate around the correct pivot point */
     transform-origin: center left;

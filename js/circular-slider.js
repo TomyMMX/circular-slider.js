@@ -12,7 +12,7 @@ var makeCircularSlider = function(args) {
     
     var defaultOptions = {
         color: "#ff3366", //the celtra logo color is set if no color is defined ;)
-        maxValue: 255,
+        maxValue: 360,
         minValue: 0,        
         step: 1,
         radius: 100,
@@ -93,7 +93,7 @@ var makeCircularSlider = function(args) {
             buttonCircle.setAttribute("id", "buttonCircle" + sliderCount);  
             sliderCircle.appendChild(slidingButton);
             slidingButton.appendChild(buttonCircle);
-            slidingButton.style.width = (5+args.radius) + "px";   
+            slidingButton.style.width = (4 + args.radius) + "px";   
 
             sliderCircle.style.zIndex = sliderCount;
         }
