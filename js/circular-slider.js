@@ -134,7 +134,7 @@ var makeCircularSlider = function (args) {
             slidingButton.appendChild(buttonCircle);
             slidingButton.style.width = (4 + args.radius) + "px";
 
-            sliderCircle.style.zIndex = sliderCount;
+            setZIndexFroSliders();
 
             //legend element 
             var legendElement = document.createElement('div');
@@ -161,6 +161,24 @@ var makeCircularSlider = function (args) {
         function initSliderPosition() {
             setCurrentAngleAndCalculateValue(calculateAngleFromValue(args.startValue));
             slidingButton.style.transform = 'rotate(' + (currentAngle - 90) + 'deg)';
+        }
+        
+        function setZIndexFroSliders() {
+            var allSliders = [];
+            //get all existing sliders and save their indexes and sizes
+            for(var i=0;i<container.childNodes.length;i++){
+                allSliders[i] = {index: i, width: container.childNodes[i].clientWidth};                                 
+            }
+            
+            //order by size
+            allSliders.sort(function(a,b){
+                return b.width - a.width;
+            });
+
+            //set zIndex, so the widest slider is on bottom and the smallest on top
+            for(var i=0;i<allSliders.length;i++){
+                 container.childNodes[allSliders[i].index].style.zIndex = i+1;                
+            }
         }
 
         function calculateAngleFromValue(val) {
