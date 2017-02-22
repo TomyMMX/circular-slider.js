@@ -1,5 +1,4 @@
 var sliderCount = 0;
-
 var makeCircularSlider = function(args) {
     
     //we have to know which container to use to draw the slider
@@ -101,26 +100,41 @@ var makeCircularSlider = function(args) {
         
         function initSliderPosition() {
             currentAngle = calculateAngleFromValue(args.startValue);
-            slidingButton.style.transform = 'rotate('+ currentAngle +'deg)';
+            slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';
         }
         
         function calculateAngleFromValue(val) {
-            return Math.round(val / (args.maxValue - args.minValue) * 360 - 90);
+            //0 degrees is equal ot minValue and 360 is equal to maxValue
+            return Math.round(val / (args.maxValue - args.minValue) * 360);
         }
         
         function calculateAngleFromMousePosition(x, y) {
             //distances from the center
             var distX = x - center.x;
             var distY = y - center.y;
-
-            return Math.round(Math.atan2(distY, distX) * 180 / Math.PI);
+            
+            var angle360 = 0;
+            var angle180_180 = Math.round(Math.atan2(distY, distX) * 180 / Math.PI);
+            //the upper formula gives us the angle in the format -180 to 180... we want that in the 0 to 360 range
+            //so 0 degrees is equal to minValue and 360 is equal to maxValue
+            if(angle180_180 >= -90 && angle180_180 <= 0){
+                angle360 = 90 + angle180_180;
+            }else if (angle180_180 < -90 && angle180_180 >= -180){
+                angle360 = 360 + 90 + angle180_180;
+            }else{
+                angle360 = angle180_180 + 90;                
+            }
+            
+            return angle360;
         };
         
         function moveSlider(event) {
             event.preventDefault();
-            
-            currentAngle = calculateAngleFromMousePosition(event.pageX, event.pageY);            
-            slidingButton.style.transform = 'rotate('+ currentAngle +'deg)';
+                                    
+            var calculatedAngle = calculateAngleFromMousePosition(event.pageX, event.pageY);   
+                        
+            currentAngle = calculatedAngle;      
+            slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';  
                
             return false;
         }
