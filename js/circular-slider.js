@@ -7,7 +7,6 @@ var makeCircularSlider = function (args) {
 
     //our container
     var mainContainer = document.getElementById(args.container);
-
     var container = document.getElementById("sliderContainer");
     var legendContainer = document.getElementById("sliderLegend");
 
@@ -42,7 +41,7 @@ var makeCircularSlider = function (args) {
         valueSuffix: ""
     };
 
-    //TODO: will we have optional arguments??
+    //fill options with defaults where undefined
     for (var def in defaultOptions) {
         if (args[def] === undefined)
             args[def] = defaultOptions[def];
@@ -54,7 +53,6 @@ var makeCircularSlider = function (args) {
 
         //parts of the slider
         var sliderCircle;
-        var sliderCenter;
         var slidingButton;
         var buttonCircle;
 
@@ -62,7 +60,7 @@ var makeCircularSlider = function (args) {
         var valueDisplay;
 
         //the hidden input
-        var input
+        var input;
 
         //center position of slider on screen
         var center;
@@ -117,7 +115,7 @@ var makeCircularSlider = function (args) {
             sliderCircle.style["background-color"] = args.color;
 
             //masking circle... so it covers the center and we only see the edge of the main circle
-            sliderCenter = document.createElement('div');
+            var sliderCenter = document.createElement('div');
             sliderCenter.setAttribute("class", "sliderCenter");
             sliderCircle.appendChild(sliderCenter);
             sliderCenter.style.width = (2 * args.radius - 34) + "px";
@@ -158,7 +156,6 @@ var makeCircularSlider = function (args) {
 
         function initSliderPosition() {
             setCurrentAngleAndCalculateValue(calculateAngleFromValue(args.startValue));
-            slidingButton.style.transform = 'rotate(' + (currentAngle - 90) + 'deg)';
         }
         
         function setZIndexFroSliders() {
@@ -217,10 +214,10 @@ var makeCircularSlider = function (args) {
             var X = event.pageX;
             var Y = event.pageY;
 
+            //if touch input then the coordinates are in the touches array of the event
             if (X === undefined) {
                 X = event.touches[0].clientX;
             }
-
             if (Y === undefined) {
                 Y = event.touches[0].clientY;
             }
@@ -239,9 +236,7 @@ var makeCircularSlider = function (args) {
                 } else {
                     setCurrentAngleAndCalculateValue(calculatedAngle);
                 }
-            }
-
-            slidingButton.style.transform = 'rotate(' + (currentAngle - 90) + 'deg)';
+            }            
 
             return false;
         }
@@ -254,17 +249,24 @@ var makeCircularSlider = function (args) {
             }
         }
 
-        function setCurrentAngleAndCalculateValue(angle) {
+        function setCurrentAngleAndCalculateValue(angle) {         
             //calculate closest legal value for angle
             var exactValue = (args.maxValue - args.minValue) * (angle / 360) + args.minValue;
             currentValue = Math.round(exactValue / args.step) * args.step;
 
+            //display the new value
             valueDisplay.innerHTML = args.valuePrefix + currentValue + args.valueSuffix;
-
+            input.setAttribute("value", currentValue);
+            
+            //don't change the visuals if they are too small to notice
+            if(Math.abs(currentAngle-angle) < 1){
+                return;
+            }            
             currentAngle = Math.round((currentValue - args.minValue) / (args.maxValue - args.minValue) * 360);
 
-            colorSlider();
-            input.setAttribute("value", currentValue);
+            //change visuals
+            colorSlider();            
+            slidingButton.style.transform = 'rotate(' + (currentAngle - 90) + 'deg)';
         }
 
         //public stuff
