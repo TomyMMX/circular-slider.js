@@ -132,8 +132,16 @@ var makeCircularSlider = function(args) {
             event.preventDefault();
                                     
             var calculatedAngle = calculateAngleFromMousePosition(event.pageX, event.pageY);   
-                        
-            currentAngle = calculatedAngle;      
+            
+            //prevent sliding over the min/max value
+            if(currentAngle>270 && calculatedAngle < 90){
+                currentAngle = 360;                
+            }else if (currentAngle < 90 && calculatedAngle > 270){
+                currentAngle = 0;                
+            }else{                
+                currentAngle = calculatedAngle;
+            }                        
+                  
             slidingButton.style.transform = 'rotate('+ (currentAngle - 90) +'deg)';  
                
             return false;
