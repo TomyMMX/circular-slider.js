@@ -16,8 +16,9 @@
             {
                 container: "container",
                 radius: 150,
-                startValue: 90,
-                step: 20,
+                startValue: 3000,
+                maxValue: 3600,
+                step: 100,
                 color: "#6c448a",
                 description: "Transportation"
             }            
@@ -26,8 +27,8 @@
         var slider2 = makeCircularSlider(
             {
                 container: "container",
-                radius: 115,
-                startValue: 270,
+                radius: 122,
+                startValue: 300,
                 step: 1,
                 color: "#1889cd",
                 description: "Food"
@@ -37,23 +38,40 @@
          var slider3 = makeCircularSlider(
             {
                 container: "container",
-                radius: 80,
-                startValue: 270,
+                radius: 94,
+                startValue: 83,
+                minValue:0,
+                maxValue:100,
                 step: 1,
                 color: "#73bf4f",
-                description: "Insurance"
+                description: "Insurance",
+                valueSuffix: "%"
             }            
         );
         
         var slider4 = makeCircularSlider(
             {
                 container: "container",
-                radius: 45,
+                radius: 66,
                 minValue: -200,
                 startValue: 270,
-                step: 1,
+                step: 0.5,
                 color: "#f39d35",
-                description: "Entertainment"
+                description: "Entertainment",
+                valuePrefix: "$"
+            }            
+        );
+        
+        var slider5 = makeCircularSlider(
+            {
+                container: "container",
+                radius: 38,
+                minValue: 0,
+                maxValue: 1000,
+                startValue: 840,
+                step: 20,
+                description: "Health care",
+                valuePrefix: "$"
             }            
         );
     </script>
