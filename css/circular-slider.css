@@ -1,5 +1,4 @@
-#sliderContainer {
-    background: #e5e5e6;      
+#sliderContainer {      
     position: relative;
     display: block;
     margin-left: auto;
@@ -8,7 +7,6 @@
 }
 
 #sliderLegend {
-    background: #e5e5e6; 
     width: 180px;   
     position: relative;
     float: left;
@@ -33,7 +31,7 @@
 	bottom: 0;
 	right: 0;
     z-index: 1;	
-	background: #e5e5e6;	
+	background: #e5e5e6; /*masking circle... shouldbe the same color as background*/	
 }
 
 .slidingButton {
@@ -63,7 +61,6 @@
     padding: 3px;
     margin: 5px;
     border-radius: 5px;
-    background: #ff3366;
     text-align: center;    
     color: white;
     font-family: Verdana;
