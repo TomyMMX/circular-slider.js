@@ -6,7 +6,27 @@ var makeCircularSlider = function(args) {
         return {};
         
     //our container
-    var container = document.getElementById(args.container);
+    var mainContainer = document.getElementById(args.container);
+    
+    var container = document.getElementById("sliderContainer");
+    var legendContainer = document.getElementById("sliderLegend");
+    
+    if(container === null){
+        container = document.createElement('div');
+        container.setAttribute("id", "sliderContainer");
+        legendContainer = document.createElement('div');
+        legendContainer.setAttribute("id", "sliderLegend");
+        legendContainer.setAttribute('class', 'clearfix');
+        mainContainer.appendChild(legendContainer);         
+        mainContainer.appendChild(container);         
+    }
+    
+    var ch = container.style.height;
+    ch = ch.substring(0, ch.length-2);
+    if(ch<args.radius*2 + 20){
+        container.style.height = (args.radius * 2 + 20) +"px";  
+        container.style.width = (args.radius * 2 + 20) +"px";        
+    }
     
     sliderCount++;
     
@@ -16,7 +36,8 @@ var makeCircularSlider = function(args) {
         minValue: 0,        
         step: 1,
         radius: 100,
-        startValue: 0
+        startValue: 0,
+        description: "Unknown"
     };
     
     //TODO: will we have optional arguments??
@@ -34,6 +55,8 @@ var makeCircularSlider = function(args) {
         var sliderCenter;
         var slidingButton;
         var buttonCircle;
+        
+        var valueDisplay;
         
         //center position of slider on screen
         var center;   
@@ -82,7 +105,7 @@ var makeCircularSlider = function(args) {
         function initSliderVisuals() { 
             //main circle of the slider
             sliderCircle = document.createElement('div');
-            sliderCircle.setAttribute("id", "sliderCircle" + sliderCount);
+            sliderCircle.setAttribute("class", "sliderCircle");
             container.appendChild(sliderCircle);            
             sliderCircle.style.width = 2 * args.radius + "px";
             sliderCircle.style.height = 2 * args.radius + "px";
@@ -90,7 +113,7 @@ var makeCircularSlider = function(args) {
             
             //masking circle... so it covers the center and we only see the edge of the main circle
             sliderCenter = document.createElement('div');
-            sliderCenter.setAttribute("id", "sliderCenter" + sliderCount);
+            sliderCenter.setAttribute("class", "sliderCenter");
             sliderCircle.appendChild(sliderCenter);            
             sliderCenter.style.width = (2 * args.radius - 34) + "px";
             sliderCenter.style.height = (2 * args.radius - 34) + "px";
@@ -98,13 +121,27 @@ var makeCircularSlider = function(args) {
             //actual sliding button
             slidingButton = document.createElement('div');
             buttonCircle = document.createElement('div');
-            slidingButton.setAttribute("id", "slidingButton" + sliderCount);
-            buttonCircle.setAttribute("id", "buttonCircle" + sliderCount);  
+            slidingButton.setAttribute("class", "slidingButton");
+            buttonCircle.setAttribute("class", "buttonCircle");  
             sliderCircle.appendChild(slidingButton);
             slidingButton.appendChild(buttonCircle);
             slidingButton.style.width = (4 + args.radius) + "px";   
 
             sliderCircle.style.zIndex = sliderCount;
+            
+            //legend element 
+            var legendElement = document.createElement('div');
+            legendElement.setAttribute('class', 'legendElement clearfix')
+            legendContainer.appendChild(legendElement);
+            valueDisplay = document.createElement('div');
+            valueDisplay.setAttribute('class', 'legendElementValue');
+            legendElement.appendChild(valueDisplay);
+            var elementName = document.createElement('div');
+            elementName.setAttribute('class', 'legendElementName');
+            elementName.innerHTML = args.description;
+            elementName.style["background-color"] = args.color;
+            legendElement.appendChild(elementName);           
+            
         }
         
         function initSliderPosition() {
@@ -173,6 +210,8 @@ var makeCircularSlider = function(args) {
             //calculate closest legal value for angle
             var exactValue = (args.maxValue-args.minValue) * (angle/360) + args.minValue;            
             currentValue = Math.round(exactValue/args.step) * args.step;
+            
+            valueDisplay.innerHTML = currentValue;
             
             currentAngle = Math.round(currentValue / (args.maxValue - args.minValue) * 360);   
             colorSlider();

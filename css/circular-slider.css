@@ -1,11 +1,20 @@
-#container {
-    background: #e5e5e6; 
-    width: 100%;
-    height: 500px;
+#sliderContainer {
+    background: #e5e5e6;      
     position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    float: left;
 }
 
-[id^="sliderCircle"] {
+#sliderLegend {
+    background: #e5e5e6; 
+    width: 180px;   
+    position: relative;
+    float: left;
+}
+
+.sliderCircle {
     border-radius: 50%;
 	margin: auto;
 	position: absolute;
@@ -15,7 +24,7 @@
 	right: 0;
 }
 
-[id^="sliderCenter"] {
+.sliderCenter {
     border-radius: 50%;
     margin: auto;
 	position: absolute;
@@ -27,7 +36,7 @@
 	background: #e5e5e6;	
 }
 
-[id^="slidingButton"] {
+.slidingButton {
 	margin-top: -14px;
     position: absolute;
 	top: 50%;
@@ -37,11 +46,47 @@
     /* So we rotate around the correct pivot point */
     transform-origin: center left;
 }
-[id^="buttonCircle"] {
+.buttonCircle {
     border-radius: 50%;
     margin: 0 0 0 auto;
 	width: 25px;
 	height: 25px;
     background: #ebebec;
 	border: 1px solid #d0d0d0;
+}
+.legendElement{
+    float: left;
+    min-width: 140px;
+}
+.legendElementName {
+    font-size: 14px;
+    padding: 3px;
+    margin: 5px;
+    border-radius: 5px;
+    background: #ff3366;
+    text-align: center;    
+    color: white;
+    font-family: Verdana;
+}
+.legendElementValue {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    font-family: Verdana;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media only screen and (max-width: 500px) {
+    #sliderLegend { 
+        width: 100%
+    }
+    #sliderContainer {
+        clear: both;
+        float: none;
+    }
 }
