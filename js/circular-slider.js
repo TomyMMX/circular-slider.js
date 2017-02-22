@@ -151,7 +151,7 @@ var makeCircularSlider = function(args) {
         
         function calculateAngleFromValue(val) {
             //0 degrees is equal ot minValue and 360 is equal to maxValue
-            return val / (args.maxValue - args.minValue) * 360;
+            return (val-args.minValue) / (args.maxValue - args.minValue) * 360;
         }
         
         function calculateAngleFromMousePosition(x, y) {
@@ -213,7 +213,7 @@ var makeCircularSlider = function(args) {
             
             valueDisplay.innerHTML = currentValue;
             
-            currentAngle = Math.round(currentValue / (args.maxValue - args.minValue) * 360);   
+            currentAngle = Math.round((currentValue-args.minValue) / (args.maxValue - args.minValue) * 360);   
             colorSlider();
         }
         
