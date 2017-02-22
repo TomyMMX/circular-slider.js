@@ -230,6 +230,9 @@ var makeCircularSlider = function(args) {
         
         //public stuff
         return {
+            getValue: function() {
+                return currentValue;
+            }
         };
     }
     
