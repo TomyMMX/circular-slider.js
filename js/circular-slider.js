@@ -58,7 +58,11 @@ var makeCircularSlider = function(args) {
         var slidingButton;
         var buttonCircle;
         
+        //div with the value
         var valueDisplay;
+        
+        //the hidden input
+        var input
         
         //center position of slider on screen
         var center;   
@@ -66,7 +70,8 @@ var makeCircularSlider = function(args) {
         //constructor
         (function() {            
             initSliderVisuals();
-            initSliderPosition();
+            initHiddenInput();
+            initSliderPosition();            
             
             //calculate center position of this slider on screen
             var boundingRect = sliderCircle.getBoundingClientRect();
@@ -144,6 +149,14 @@ var makeCircularSlider = function(args) {
             elementName.style["background-color"] = args.color;
             legendElement.appendChild(elementName);           
             
+        }
+        
+        function initHiddenInput(){            
+            input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "circularSlider_" + sliderCount);
+            input.id = "circularSlider_" + sliderCount;
+            sliderCircle.appendChild(input);
         }
         
         function initSliderPosition() {
@@ -225,7 +238,9 @@ var makeCircularSlider = function(args) {
             valueDisplay.innerHTML = args.valuePrefix + currentValue + args.valueSuffix;
             
             currentAngle = Math.round((currentValue-args.minValue) / (args.maxValue - args.minValue) * 360);   
+            
             colorSlider();
+            input.setAttribute("value", currentValue);
         }
         
         //public stuff
