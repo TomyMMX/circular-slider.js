@@ -71,18 +71,13 @@ var makeCircularSlider = function (args) {
         (function () {
             initSliderVisuals();
             initHiddenInput();
+            calculateSliderCenter();
             initSliderPosition();
-
-            //calculate center position of this slider on screen
-            var boundingRect = sliderCircle.getBoundingClientRect();
-            center = {
-                x: boundingRect.left + boundingRect.width / 2,
-                y: boundingRect.top + boundingRect.height / 2
-            };
 
             //event listeners
             //add mousemove listener when mousedown on buttonCirlce
             buttonCircle.addEventListener("mousedown", function () {
+                calculateSliderCenter();
                 document.addEventListener("mousemove", moveSlider);
             });
 
@@ -93,6 +88,7 @@ var makeCircularSlider = function (args) {
 
             //and the same for touch events
             buttonCircle.addEventListener("touchstart", function () {
+                calculateSliderCenter();
                 document.addEventListener("touchmove", moveSlider);
             });
             document.addEventListener("touchend", function () {
@@ -101,9 +97,11 @@ var makeCircularSlider = function (args) {
 
             //click or touch event on the slider circle
             sliderCircle.addEventListener("click", function () {
+                calculateSliderCenter();
                 moveSlider(event, true);
             });
             sliderCircle.addEventListener("touchstart", function () {
+                calculateSliderCenter();
                 moveSlider(event, true);
             });
         })();
@@ -180,6 +178,15 @@ var makeCircularSlider = function (args) {
                  container.childNodes[allSliders[i].index].style.zIndex = i+1;                
             }
         }
+        
+        function calculateSliderCenter(){
+            //calculate center position of this slider on screen
+            var boundingRect = sliderCircle.getBoundingClientRect();
+            center = {
+                x: boundingRect.left + boundingRect.width / 2,
+                y: boundingRect.top + boundingRect.height / 2
+            };
+        }
 
         function calculateAngleFromValue(val) {
             //0 degrees is equal ot minValue and 360 is equal to maxValue
@@ -241,9 +248,9 @@ var makeCircularSlider = function (args) {
 
         function colorSlider() {
             if (currentAngle >= 0 && currentAngle <= 180) {
-                sliderCircle.style["background-image"] = "linear-gradient(" + (currentAngle + 90) + "deg, transparent 50%, #cfcfd0 50%), linear-gradient(90deg, #cfcfd0 50%, transparent 50%)";
+                sliderCircle.style["background-image"] = "linear-gradient(" + (currentAngle + 91) + "deg, transparent 50%, #cfcfd0 50%), linear-gradient(90deg, #cfcfd0 50%, transparent 50%)";
             } else {
-                sliderCircle.style["background-image"] = "linear-gradient(" + (currentAngle - 90) + "deg, transparent 50%, " + args.color + " 50%), linear-gradient(90deg, #cfcfd0 50%, transparent 50%)";
+                sliderCircle.style["background-image"] = "linear-gradient(" + (currentAngle - 91) + "deg, transparent 50%, " + args.color + " 50%), linear-gradient(90deg, #cfcfd0 50%, transparent 50%)";
             }
         }
 
