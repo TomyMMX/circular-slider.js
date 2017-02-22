@@ -37,7 +37,9 @@ var makeCircularSlider = function(args) {
         step: 1,
         radius: 100,
         startValue: 0,
-        description: "Unknown"
+        description: "Unknown",
+        valuePrefix: "",
+        valueSuffix: ""
     };
     
     //TODO: will we have optional arguments??
@@ -220,7 +222,7 @@ var makeCircularSlider = function(args) {
             var exactValue = (args.maxValue-args.minValue) * (angle/360) + args.minValue;            
             currentValue = Math.round(exactValue/args.step) * args.step;
             
-            valueDisplay.innerHTML = currentValue;
+            valueDisplay.innerHTML = args.valuePrefix + currentValue + args.valueSuffix;
             
             currentAngle = Math.round((currentValue-args.minValue) / (args.maxValue - args.minValue) * 360);   
             colorSlider();
