@@ -51,6 +51,7 @@
 	height: 25px;
     background: #ebebec;
 	border: 1px solid #d0d0d0;
+    cursor: pointer;
 }
 .legendElement{
     float: left;
