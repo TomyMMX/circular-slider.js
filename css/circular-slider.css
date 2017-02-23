@@ -21,7 +21,14 @@
 	bottom: 0;
 	right: 0;
 }
-
+.fancyLine {
+	height: 1px;	
+	position: absolute;
+	top: 50%;
+	left: 50%;
+    background: rgba(220, 220, 221, 0.65);
+	transform-origin: center left;
+}
 .sliderCenter {
     border-radius: 50%;
     margin: auto;

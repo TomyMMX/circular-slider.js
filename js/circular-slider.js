@@ -71,7 +71,7 @@ var makeCircularSlider = function (args) {
             initHiddenInput();
             calculateSliderCenter();
             initSliderPosition();
-
+            
             //event listeners
             //add mousemove listener when mousedown on buttonCirlce
             buttonCircle.addEventListener("mousedown", function () {
@@ -113,6 +113,9 @@ var makeCircularSlider = function (args) {
             sliderCircle.style.width = 2 * args.radius + "px";
             sliderCircle.style.height = 2 * args.radius + "px";
             sliderCircle.style["background-color"] = args.color;
+            
+            //add some fancy lines
+            initLines();
 
             //masking circle... so it covers the center and we only see the edge of the main circle
             var sliderCenter = document.createElement('div');
@@ -156,6 +159,20 @@ var makeCircularSlider = function (args) {
 
         function initSliderPosition() {
             setCurrentAngleAndCalculateValue(calculateAngleFromValue(args.startValue));
+        }
+        
+        function initLines(){
+            //lines that make the slider more fancy
+            //make the lines of equal distance on the edges 9px
+            var lineNum = Math.round((2 * args.radius * Math.PI) / 9);
+            var lineAngle = 360 / lineNum;
+            for (var i = 0; i < lineNum; i++) {
+                var line = document.createElement("div");
+                line.setAttribute('class', 'fancyLine');
+                line.style.width = args.radius+'px';
+                sliderCircle.appendChild(line);
+                line.style.transform = 'rotate(' + (i * lineAngle - 90) + 'deg)';
+            }
         }
         
         function setZIndexFroSliders() {
