@@ -1,4 +1,10 @@
 var sliderCount = 0;
+
+/**
+ * Creates a circular slider in the specified container
+ * @param {Javascript Object} args 
+ * @return {object} Returns the new slider object
+ */
 var makeCircularSlider = function (args) {
 
     //we have to know which container to use to draw the slider
@@ -20,6 +26,7 @@ var makeCircularSlider = function (args) {
         mainContainer.appendChild(container);
     }
 
+    //resize the container to the largest slider
     var ch = container.style.height;
     ch = ch.substring(0, ch.length - 2);
     if (ch < args.radius * 2 + 20) {
@@ -104,7 +111,10 @@ var makeCircularSlider = function (args) {
             });
         })();
 
-        //private stuff
+        //private 
+        /**
+         * Initializes the visuals for the slider and puts them in the DOM
+         */
         function initSliderVisuals() {
             //main circle of the slider
             sliderCircle = document.createElement('div');
@@ -149,6 +159,9 @@ var makeCircularSlider = function (args) {
             legendElement.appendChild(elementName);
         }
 
+        /**
+         * Creates the hidden input that will hold the slider value
+         */
         function initHiddenInput() {
             input = document.createElement("input");
             input.setAttribute("type", "hidden");
@@ -157,10 +170,16 @@ var makeCircularSlider = function (args) {
             sliderCircle.appendChild(input);
         }
 
+        /**
+         * Moves the slider to the correct initial position minValue or startValue
+         */
         function initSliderPosition() {
             setCurrentAngleAndCalculateValue(calculateAngleFromValue(args.startValue));
         }
         
+        /**
+         * Adds the dashing lines to the DOM
+         */
         function initLines(){
             //lines that make the slider more fancy
             //make the lines of equal distance on the edges 9px
@@ -175,6 +194,10 @@ var makeCircularSlider = function (args) {
             }
         }
         
+        /**
+         * Sets the zIndex for all the sliders that exist up to now.
+         * So we always stack them priperly. The widest on the bottom and the narrowest on top.
+         */
         function setZIndexFroSliders() {
             var allSliders = [];
             //get all existing sliders and save their indexes and sizes
@@ -193,8 +216,10 @@ var makeCircularSlider = function (args) {
             }
         }
         
-        function calculateSliderCenter(){
-            //calculate center position of this slider on screen
+        /**
+         * Calculate center position of this slider on screen      
+         */
+        function calculateSliderCenter(){            
             var boundingRect = sliderCircle.getBoundingClientRect();
             center = {
                 x: boundingRect.left + boundingRect.width / 2,
@@ -202,11 +227,22 @@ var makeCircularSlider = function (args) {
             };
         }
 
+        /**
+         * Calculates the angle of the slider for a specific value.
+         * @param {Number} val - the value that we want the correct angle for
+         * @return {Number} The angle of the slider in the 0-360 range for this value
+         */
         function calculateAngleFromValue(val) {
             //0 degrees is equal ot minValue and 360 is equal to maxValue
             return (val - args.minValue) / (args.maxValue - args.minValue) * 360;
         }
 
+         /**
+         * Calculates the angle between the vertical line and the line from the center to the mouse/touch possition
+         * @param {Number} x - the X coordinate of the mouse
+         * @param {Number} y - the Y coordinate of the mouse
+         * @return {Number} The angle of the slider in the 0-360 range.
+         */
         function calculateAngleFromMousePosition(x, y) {
             //distances from the center
             var distX = x - center.x;
@@ -227,6 +263,12 @@ var makeCircularSlider = function (args) {
             return angle360;
         };
 
+        /**
+         * Handles a move of the slider
+         * @param {Object} event - the event object holding the click/touch data
+         * @param {Boolean} isClick - determines if the move was requested witha click or tap on some location on the slider
+         * @return {Boolean} always false
+         */
         function moveSlider(event, isClick) {
             var X = event.pageX;
             var Y = event.pageY;
@@ -258,6 +300,9 @@ var makeCircularSlider = function (args) {
             return false;
         }
 
+         /**
+         * Changes the collor of the slider circle so the colored part coresponds to the selected value
+         */
         function colorSlider() {
             if (currentAngle >= 0 && currentAngle <= 180) {
                 sliderCircle.style["background-image"] = "linear-gradient(" + (currentAngle + 91) + "deg, transparent 50%, #cfcfd0 50%), linear-gradient(90deg, #cfcfd0 50%, transparent 50%)";
@@ -266,6 +311,10 @@ var makeCircularSlider = function (args) {
             }
         }
 
+         /**
+         * Calculates the value coresponding to the new angle and changes the visual elemnts according to this.
+         * @param {Number} angle - the angle requested by a slider move
+         */
         function setCurrentAngleAndCalculateValue(angle) {         
             //calculate closest legal value for angle
             var exactValue = (args.maxValue - args.minValue) * (angle / 360) + args.minValue;
