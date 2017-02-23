@@ -33,6 +33,7 @@ var slider1 = makeCircularSlider(
   }            
 );
 ```
+All otions but the container option are optional, but I strongly suggest you set them since othervise the slider won't be really useful :)
 
 ##Demo
 A demo can be found here: [https://tomymmx.github.io/circular-slider.js/]([https://tomymmx.github.io/circular-slider.js/](https://tomymmx.github.io/circular-slider.js/))
