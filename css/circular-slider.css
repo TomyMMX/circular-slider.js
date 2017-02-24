@@ -42,20 +42,16 @@
 }
 
 .slidingButton {
-	margin-top: -14px;
-    position: absolute;
+	position: absolute;
 	top: 50%;
 	left: 50%;
-	height: 28px;	
 	z-index: 1;
     /* So we rotate around the correct pivot point */
     transform-origin: center left;
 }
 .buttonCircle {
     border-radius: 50%;
-    margin: 0 0 0 auto;
-	width: 23px;
-	height: 23px;
+    margin: 0 0 0 auto;	
     background: #ebebec;
 	border: 1px solid #d0d0d0;
     cursor: pointer;

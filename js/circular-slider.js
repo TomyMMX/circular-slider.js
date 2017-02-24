@@ -42,6 +42,7 @@ var makeCircularSlider = function (args) {
         minValue: 0,
         step: 1,
         radius: 100,
+        bandWidth: 17,
         startValue: 0,
         description: "Unknown",
         valuePrefix: "",
@@ -131,8 +132,8 @@ var makeCircularSlider = function (args) {
             var sliderCenter = document.createElement('div');
             sliderCenter.setAttribute("class", "sliderCenter");
             sliderCircle.appendChild(sliderCenter);
-            sliderCenter.style.width = (2 * args.radius - 34) + "px";
-            sliderCenter.style.height = (2 * args.radius - 34) + "px";
+            sliderCenter.style.width = (2 * args.radius - args.bandWidth * 2) + "px";
+            sliderCenter.style.height = (2 * args.radius - args.bandWidth * 2) + "px";
 
             //actual sliding button
             slidingButton = document.createElement('div');
@@ -142,6 +143,10 @@ var makeCircularSlider = function (args) {
             sliderCircle.appendChild(slidingButton);
             slidingButton.appendChild(buttonCircle);
             slidingButton.style.width = (4 + args.radius) + "px";
+            slidingButton.style.height = (args.bandWidth + 8) + "px";
+            slidingButton.style['margin-top'] = (-(args.bandWidth + 8)/2) + "px";
+            buttonCircle.style.width =  (args.bandWidth + 6) + "px";
+            buttonCircle.style.height =  (args.bandWidth + 6) + "px";
 
             setZIndexFroSliders();
 

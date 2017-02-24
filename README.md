@@ -26,6 +26,7 @@ var slider1 = makeCircularSlider(
     minValue: 0, //the minimal value
     step: 1, //step size in which the value can change
     radius: 100, //radius of the slider
+    bandWidth: 17, //width of the slider band/arc
     startValue: 0, //the value that the slider initialises with
     description: "Unknown", //the description of this slider... also seen under the selected value in the legend
     valuePrefix: "$", //if you need some prefix in the value display.. for example currency signs
@@ -33,7 +34,7 @@ var slider1 = makeCircularSlider(
   }            
 );
 ```
-All otions but the container option are optional, but I strongly suggest you set them since othervise the slider won't be really useful :)
+All options but the container option are optional, but I strongly suggest you set them since otherwise the slider won't be really useful :)
 
 ##Demo
 A demo can be found here: [https://tomymmx.github.io/circular-slider.js/]([https://tomymmx.github.io/circular-slider.js/](https://tomymmx.github.io/circular-slider.js/))
