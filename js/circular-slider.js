@@ -94,8 +94,9 @@ var makeCircularSlider = function (args) {
 
             //and the same for touch events
             buttonCircle.addEventListener("touchstart", function () {
+                event.preventDefault();
                 calculateSliderCenter();
-                document.addEventListener("touchmove", moveSlider);
+                document.addEventListener("touchmove", moveSlider, {passive: false});
             });
             document.addEventListener("touchend", function () {
                 document.removeEventListener("touchmove", moveSlider);
@@ -275,6 +276,7 @@ var makeCircularSlider = function (args) {
          * @return {Boolean} always false
          */
         function moveSlider(event, isClick) {
+            event.preventDefault();
             var X = event.pageX;
             var Y = event.pageY;
 
@@ -300,10 +302,7 @@ var makeCircularSlider = function (args) {
                 } else {
                     setCurrentAngleAndCalculateValue(calculatedAngle);
                 }
-            }            
-			
-			event.preventDefault()
-			
+            }  
             return false;
         }
 
