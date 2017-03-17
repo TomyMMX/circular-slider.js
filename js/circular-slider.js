@@ -301,7 +301,9 @@ var makeCircularSlider = function (args) {
                     setCurrentAngleAndCalculateValue(calculatedAngle);
                 }
             }            
-
+			
+			event.preventDefault()
+			
             return false;
         }
 
